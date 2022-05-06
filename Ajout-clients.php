@@ -4,6 +4,16 @@ echo "<pre>".print_r($_GET, true)."</pre>"; // DEBUG
 
 // ajouter le code de gestion de ce formulaire
 
+$nom     = $_GET["nom"] ?? "";
+$prenom     = $_GET["prenom"] ?? "";
+$naissance     = $_GET["naissance"] ?? "";
+$telephone     = $_GET["telephone"] ?? "";
+$messageAjout = "Ajout effectué dans la base de données";
+$errorNom = "au moins deux characteres";
+$errorPrenom = "au moins deux characteres";
+$errorNaissance = "doit etre majeur";
+$errorTelephone = "format incorrecte. Doit etre 123-123-1234";
+
 ?>
 
 
@@ -27,7 +37,7 @@ echo "<pre>".print_r($_GET, true)."</pre>"; // DEBUG
     
     <br>
     <label>Nom :</label>
-    <input type="text" name="nom" value="">
+    <input type="text" name="nom" value=" ">
     
     <br>
     <label>Prenom :</label>
@@ -35,11 +45,11 @@ echo "<pre>".print_r($_GET, true)."</pre>"; // DEBUG
 
     <br>
     <label>Date de naissance :</label>
-    <input type="text" name="naissance" value="">
+    <input type="text" name="naissance" value="aaaa-mm-jj">
 
     <br>
     <label>Téléphone :</label>
-    <input type="text" name="telephone" value="">
+    <input type="text" name="telephone" value="999-999-9999">
 
     <br>
     <input type="submit" value="Valider"> 

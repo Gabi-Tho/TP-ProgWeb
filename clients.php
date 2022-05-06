@@ -40,6 +40,9 @@ $clients = [
 <body>
   <main>
       <h1>Clients</h1>
+      <br>
+      <div><a href="Ajout-clients.php">ajouter un client</a></div>
+      <br>
       <div class ="grid" style="grid-template-columns: repeat(5, max-content)">
           <div class="top">ID</div>
           <div class="top">Nom</div>
