@@ -1,13 +1,13 @@
 <?php
 
-echo "<pre>".print_r($_GET, true)."</pre>"; // DEBUG
+echo "<pre>".print_r($_POST, true)."</pre>"; // DEBUG
 
 // ajouter le code de gestion de ce formulaire
 
-$nom     = $_GET["nom"] ?? "";
-$prenom     = $_GET["prenom"] ?? "";
-$naissance     = $_GET["naissance"] ?? "";
-$telephone     = $_GET["telephone"] ?? "";
+$nom     = $_POST["nom"] ?? "";
+$prenom     = $_POST["prenom"] ?? "";
+$naissance     = $_POST["naissance"] ?? "";
+$telephone     = $_POST["telephone"] ?? "";
 $messageAjout = "Ajout effectué dans la base de données";
 $errorNom = "au moins deux characteres";
 $errorPrenom = "au moins deux characteres";
@@ -16,7 +16,13 @@ $errorTelephone = "format incorrecte. Doit etre 123-123-1234";
 
 ?>
 
-
+<?php
+  if(strlen($nom) == mb_strlen($nom)){
+    echo $errorNom;
+      }else{
+        $errorNom = " ";
+      }
+?>
 
 <!doctype html>
 <html lang="fr">
@@ -27,29 +33,34 @@ $errorTelephone = "format incorrecte. Doit etre 123-123-1234";
     body                                         { width: 80%; margin: 50px auto; }
     input, select, textarea                      { display: block; width: 200px; margin: 10px; }
     input[type="radio"], input[type="checkbox"]  { display: inline-block; width: 20px; }
-    label, input, select, textarea               { line-height: 24px; }  
+    label, input, select, textarea               { line-height: 24px; }
+    span { color:red; text-align: right; display: block;}
   </style>
 </head>
 <body>
   <h2>Ajout d'une client</h2>
 
-  <form action="<?= $_SERVER["PHP_SELF"] ?>" method="get">
+  <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
     
     <br>
     <label>Nom :</label>
     <input type="text" name="nom" value=" ">
+    <span>&nbsp;<?= $errorNom ?></span>
     
     <br>
     <label>Prenom :</label>
     <input type="text" name="prenom" value="">
+    <span>&nbsp;<?= $errorNom ?></span>
 
     <br>
     <label>Date de naissance :</label>
     <input type="text" name="naissance" value="aaaa-mm-jj">
+    <span>&nbsp;<?= $errorNom ?></span>
 
     <br>
     <label>Téléphone :</label>
-    <input type="text" name="telephone" value="999-999-9999">
+    <input type="tel" name="telephone" value="123-123-1234">
+    <span>&nbsp;<?= $errorNom ?></span>
 
     <br>
     <input type="submit" value="Valider"> 
