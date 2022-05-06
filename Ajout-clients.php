@@ -18,10 +18,11 @@ $errorTelephone = "format incorrecte. Doit etre 123-123-1234";
 
 <?php
   if(strlen($nom) == mb_strlen($nom)){
-    echo $errorNom;
+    echo $char = false;
       }else{
         $errorNom = " ";
       }
+
 ?>
 
 <!doctype html>
@@ -44,8 +45,9 @@ $errorTelephone = "format incorrecte. Doit etre 123-123-1234";
     
     <br>
     <label>Nom :</label>
-    <input type="text" name="nom" value=" ">
-    <span>&nbsp;<?= $errorNom ?></span>
+    
+    <input type="text" name="nom" value=" "><span>&nbsp;<?= $errorNom ?></span>
+    
     
     <br>
     <label>Prenom :</label>
