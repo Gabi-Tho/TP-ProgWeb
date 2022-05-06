@@ -52,7 +52,7 @@ $clients = [
             <div class="content"><?php echo $clients["nom"].", ".$clients["prenom"]?></div>
             <div class="content"><?php echo $clients["dateNaissance"]?></div>
             <div class="content"><?php echo $clients["tel"]?></div>
-            <div class="content"><a href="https://en.wikipedia.org/wiki/Megalodon">modifier</a></div>
+            <div class="content"><a href="modifications.php">modifier</a></div>
           </div>
 <?php endforeach ?>
       </div>
