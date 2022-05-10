@@ -1,32 +1,33 @@
 <?php
 
-function calculerAge ( $anneeNaissance, $moisNaissance, $jourNaissance ) {
-    $anneeEnCours = date ("Y");
-    $moisEnCours = date ("n");
-    $jourEnCours = date ("j");
-    $age = $anneeEnCours - $anneeNaissance ;
-    if ($moisEnCours < $moisNaissance) {
-        $age = $age - 1;
-    }
-}
-function valideDate ($annee, $mois, $jour)
-$nbJoursMois = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ] ;
-$anneeMini = 1900;
-
-if (is_int($annee) === false || $annee < $anneeMini ) {
+function calculerAge($jourNaissance, $moisNaissance, $anneeNaissance) {
+  
+  if (!validerDate($jourNaissance, $moisNaissance, $anneeNaissance)) {
     return false;
-}
+  }
 
-if (is_int($mois) === false || $mois < 1 || $mois >12) {
+  $anneeEnCours = (int) date("Y");
+  $moisEnCours  = (int) date("n");
+  $jourEnCours  = (int) date("j");
+
+  if ($anneeEnCours < $anneeNaissance ||
+      $anneeEnCours === $anneeNaissance && $moisEnCours < $moisNaissance ||
+      $anneeEnCours === $anneeNaissance && $moisEnCours === $moisNaissance && $jourEnCours < $jourNaissance
+     ) {
     return false;
+  }
+
+  $age = $anneeEnCours - $anneeNaissance;
+  if ($moisEnCours < $moisNaissance || $moisEnCours == $moisNaissance && $jourEnCours < $jourNaissance) {
+    $age--; 
+  }
+  return $age;
 }
 
-if ($annee %4 === 0 && ($annee%100 > 0 || $annee%400 === 0)) {
-    $nbJoursMois[1] =29;
-}
 
-if (is_int($jour) || $jour < 1 || $jour < $nbJoursMois[ $mois] ) {
-    return false;
-}
-return false;
-}
+
+echo checkdate(01,14,1994);
+
+
+
+?>

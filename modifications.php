@@ -10,4 +10,9 @@ $clients = [
   ["id" => 8, "nom" => "Hébert", "prenom" => "Hugo",   "dateNaissance" => "1988-08-08", "tel" => "514 888-1234"],
   ["id" => 9, "nom" => "Imbert", "prenom" => "Iris",   "dateNaissance" => "1989-09-09", "tel" => "514 999-1234"]
 ];
+
+
+echo "<pre>".print_r($_GET, true). "</pre>";
+echo "<pre>".print_r($_SERVER, true). "</pre>";
+
 ?>

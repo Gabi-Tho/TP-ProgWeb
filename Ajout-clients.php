@@ -40,6 +40,7 @@ if (strlen($nom) <= 2 ){
 // }
 
 $naissance = str_replace("-", " ", $naissance);
+
 if(substr($naissance,0,4) <= 2004){
   $errorNaissance = " ";
 }else{
