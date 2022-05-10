@@ -21,7 +21,7 @@ echo print_r($_POST["telephone"]);
 
 <?php
 
-//code for nom and prenom
+//code for nom and prenom is correct
 if(strlen($nom) == mb_strlen($nom)){
   $char = false;
 }else {
@@ -34,42 +34,59 @@ if (strlen($nom) <= 2 ){
   $errorLength = " ";
 }
 
+// if (strlen($naissance) == 9){
+//   $errorNaissance = "input is equal to 9";
+//   $errorLength = " ";
+// }
 
+$naissance = str_replace("-", " ", $naissance);
+if(substr($naissance,0,4) <= 2004){
+  $errorNaissance = " ";
+}else{
+  $errorNaissance = "doit etre majeur";
+}
+
+  
 //code for telephone number
-for ($i = 0; $i <= 11 ; $i++){
-    $c = $telephone[$i];
-    if($c >= "0" && $c <= "9"){
-      $tel = true;
-      $errorTelephone = " ";
-    }
+// for ($i = 0; $i <= 11 ; $i++){
+//     $c = $telephone[$i];
+//     if($c >= "0" && $c <= "9"){
+//       $tel = true;
+//       $errorTelephone = " ";
+//         }
+// }
+//     $c = $telephone[$i];
+//     if($c >= "0" && $c <= "9"){
+      
+//     }
 
-    if($telephone[3] != " "){
-      $tel = false;
-    }else{
-      $errorTelephone = " ";
-    }
+//     if($telephone[3] != " "){
+//       $tel = false;
+//     }else{
+//       $errorTelephone = " ";
+//     }
 
-    if($telephone[7] != "-"){
-      $tel = false;
-    }else{
-      $errorTelephone = " ";
-    }
+//     if($telephone[7] != "-"){
+//       $tel = false;
+//     }else{
+//       $errorTelephone = " ";
+//     }
   
 //code for naissance 
 
-if(strlen($naissance) =! 9){
-  $naiss = false;
-}else{
-  $errorNaissance = " ";
-}
+// if(strlen($naissance) =! 9){
+//   $naiss = false;
+// }else{
+//   $errorNaissance = " ";
+// }
 
-$annee = substr($naissance,0,4);
+//$annee = substr($naissance,0,4);
 //insert code for appropriate year
 
-$mois = substr($birth,5,2);
+//$mois = substr($birth,5,2);
 //insert code for appropriate month
 
-$jour = substr($jour,8,2);
+//$jour = substr($jour,8,2);
 //insert code for appropriate day
 
 
@@ -108,7 +125,7 @@ $jour = substr($jour,8,2);
     <br>
     <label>Date de naissance :</label>
     <input type="text" name="naissance" value="aaaa-mm-jj">
-    <span>&nbsp;<?= $errorChar."<br>".$errorLength ?></span>
+    <span>&nbsp;<?= $errorNaissance."<br>".$errorLength ?></span>
 
     <br>
     <label>Téléphone :</label>
