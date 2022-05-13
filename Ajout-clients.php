@@ -14,6 +14,7 @@ $erreurDateFormat = " ";
 $errorLength = "";
 $errorNaissance = "";
 $errorTelephone = ""; //format incorrecte. Doit etre 123 123-1234
+$errorTelephone1 = "";
 
 
 ?>
@@ -69,48 +70,49 @@ if(substr($naissance,0,4) == 2004 && $mois == $moisPresent && $jour == $jourPres
 }
 
   
-//code for telephone number
-// for ($i = 0; $i <= 11 ; $i++){
-//     $c = $telephone[$i];
-//     if($c >= "0" && $c <= "9"){
-//       $tel = true;
-//       $errorTelephone = " ";
-//         }
-// }
-//     $c = $telephone[$i];
-//     if($c >= "0" && $c <= "9"){
-      
-//     }
+//code for telephone
 
-//     if($telephone[3] != " "){
-//       $tel = false;
-//     }else{
-//       $errorTelephone = " ";
-//     }
+if (mb_strlen($telephone) == 12){
+  $errorTelephone = " "; 
+}else{
+  $errorTelephone = "mauvais format";
+}
 
-//     if($telephone[7] != "-"){
-//       $tel = false;
-//     }else{
-//       $errorTelephone = " ";
-//     }
-  
-//code for naissance 
+//check proper spacing
+if (substr($telephone,3,1) == " "){
+  $errorTelephone1 = " ";
+}else{
+  $errorTelephone1 = "mauvais format";
+}
+//check proper "-"
+if (substr($telephone,7,1) == "-"){
+  $errorTelephone2 = " ";
+}else{
+  $errorTelephone2 = "mauvais format";
+}
 
-// if(strlen($naissance) =! 9){
-//   $naiss = false;
-// }else{
-//   $errorNaissance = " ";
-// }
+// check proper number sequence
 
-//$annee = substr($naissance,0,4);
-//insert code for appropriate year
-
-//$mois = substr($birth,5,2);
-//insert code for appropriate month
-
-//$jour = substr($jour,8,2);
-//insert code for appropriate day
-
+if (is_numeric(substr($telephone,0,3))){
+  $errorTelephone3 = " ";
+}else{
+  $errorTelephone3 = "mauvais format";
+}
+if (is_numeric(substr($telephone,4,3))){
+  $errorTelephone4 = " ";
+}else{
+  $errorTelephone4 = "mauvais format";
+}
+if (is_numeric(substr($telephone,4,3))){
+  $errorTelephone5 = " ";
+}else{
+  $errorTelephone5 = "mauvais format";
+}
+if (is_numeric(substr($telephone,8,4))){
+  $errorTelephone6 = " ";
+}else{
+  $errorTelephone6 = "mauvais format";
+}
 
 ?>
 
@@ -152,7 +154,7 @@ if(substr($naissance,0,4) == 2004 && $mois == $moisPresent && $jour == $jourPres
     <br>
     <label>Téléphone :</label>
     <input type="tel" name="telephone" value="" placeholder="123 -1234">
-    <span>&nbsp;<?= $errorTelephone."<br>"//.$errorLength?></span>
+    <span>&nbsp;<?= $errorTelephone."<br>".$errorTelephone1."<br>".$errorTelephone2."<br>".$errorTelephone3."<br>".$errorTelephone4?></span>
 
     <br>
     <input type="submit" value="Valider"> 
@@ -161,3 +163,6 @@ if(substr($naissance,0,4) == 2004 && $mois == $moisPresent && $jour == $jourPres
 
 </body>
 </html>
+<?php
+//"<br>".$errorTelephone4."<br>".$errorTelephone5."<br>".$errorTelephone6
+?>
