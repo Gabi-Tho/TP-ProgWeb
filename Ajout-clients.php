@@ -14,8 +14,6 @@ $errorLength = "au moins deux characteres";
 $errorNaissance = "doit etre majeur";
 $errorTelephone = "format incorrecte. Doit etre 123 123-1234";
 
-echo print_r($_POST["telephone"]);
-
 
 ?>
 
@@ -39,11 +37,29 @@ if (strlen($nom) <= 2 ){
 //   $errorLength = " ";
 // }
 
+// code pour age de majorité
+
+
 $naissance = str_replace("-", " ", $naissance);
 
-if(substr($naissance,0,4) <= 2004){
+date_default_timezone_set("America/Toronto");
+
+echo $annee = substr($naissance,0,4)." ";
+echo $mois = substr($naissance,5,2)." ";
+echo $jour = substr($naissance,8,2)." ";
+
+echo $anneePresent = date("Y")." ";  
+echo $moisPresent = date("m")." "; 
+echo $jourPresent = date("d");
+
+
+if(substr($naissance,0,4) == 2004 && $mois === $moisPresent && $jour === $jourPresent){
   $errorNaissance = " ";
-}else{
+}elseif(substr($naissance,0,4) == 2004 && $mois <= $moisPresent && $jour <= $jourPresent){
+  $errorNaissance = " ";
+}elseif(substr($naissance,0,4) < 2004){
+  $errorNaissance = " ";
+}elseif(substr($naissance,0,4) > 2004){
   $errorNaissance = "doit etre majeur";
 }
 
