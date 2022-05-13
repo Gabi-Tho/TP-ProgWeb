@@ -9,10 +9,11 @@ $prenom     = $_POST["prenom"] ?? "";
 $naissance     = $_POST["naissance"] ?? "";
 $telephone     = $_POST["telephone"] ?? "";
 $messageAjout = "Ajout effectué dans la base de données";
-$errorChar = "au moins un characteres spéciale";
-$errorLength = "au moins deux characteres";
-$errorNaissance = "doit etre majeur";
-$errorTelephone = "format incorrecte. Doit etre 123 123-1234";
+$errorChar = "";
+$erreurDateFormat = " ";
+$errorLength = "";
+$errorNaissance = "";
+$errorTelephone = ""; //format incorrecte. Doit etre 123 123-1234
 
 
 ?>
@@ -21,23 +22,17 @@ $errorTelephone = "format incorrecte. Doit etre 123 123-1234";
 
 //code for nom and prenom is correct
 if(strlen($nom) == mb_strlen($nom)){
-  $char = false;
+  $errorChar = "au moins quelques characteres speciale";
 }else {
   $errorChar = " ";
 }
 
-if (strlen($nom) <= 2 ){
-  $length = false;
+if (mb_strlen($nom) <= 2 ){
+  $errorLength = "au moins quelques characteres speciale";
 }else{
   $errorLength = " ";
 }
 
-// if (strlen($naissance) == 9){
-//   $errorNaissance = "input is equal to 9";
-//   $errorLength = " ";
-// }
-
-// code pour age de majorité
 
 
 $naissance = str_replace("-", " ", $naissance);
@@ -48,12 +43,22 @@ echo $annee = substr($naissance,0,4)." ";
 echo $mois = substr($naissance,5,2)." ";
 echo $jour = substr($naissance,8,2)." ";
 
+$annee = intval($annee);
+$mois = intval($mois);
+$jour = intval($mois);
+
+if (checkdate($mois,$jour,$annee)){
+  $erreurDateFormat = " ";
+}else{
+  $erreurDateFormat = "doit avoir le bon format";
+}
+
 echo $anneePresent = date("Y")." ";  
 echo $moisPresent = date("m")." "; 
 echo $jourPresent = date("d");
 
 
-if(substr($naissance,0,4) == 2004 && $mois === $moisPresent && $jour === $jourPresent){
+if(substr($naissance,0,4) == 2004 && $mois == $moisPresent && $jour == $jourPresent){
   $errorNaissance = " ";
 }elseif(substr($naissance,0,4) == 2004 && $mois <= $moisPresent && $jour <= $jourPresent){
   $errorNaissance = " ";
@@ -141,13 +146,13 @@ if(substr($naissance,0,4) == 2004 && $mois === $moisPresent && $jour === $jourPr
 
     <br>
     <label>Date de naissance :</label>
-    <input type="text" name="naissance" value="aaaa-mm-jj">
-    <span>&nbsp;<?= $errorNaissance."<br>".$errorLength ?></span>
+    <input type="text" name="naissance" value="" placeholder="aaaa-mm-jj">
+    <span>&nbsp;<?= $errorNaissance."<br>".$erreurDateFormat;?></span>
 
     <br>
     <label>Téléphone :</label>
-    <input type="tel" name="telephone" value="123 -1234">
-    <span>&nbsp;<?= $errorTelephone."<br>".$errorLength?></span>
+    <input type="tel" name="telephone" value="" placeholder="123 -1234">
+    <span>&nbsp;<?= $errorTelephone."<br>"//.$errorLength?></span>
 
     <br>
     <input type="submit" value="Valider"> 
