@@ -1,6 +1,6 @@
 <?php
 
-// echo "<pre>".print_r($_POST, true)."</pre>"; // tool to help me check 
+ 
 
 // ajouter le code de gestion de ce formulaire
 
@@ -28,14 +28,18 @@ if(count($_POST) > 0){
 
   if(strlen($nom) == mb_strlen($nom)){
     $errorChar = "au moins quelques characteres speciale";
+    $name = false;
   }else {
     $errorChar = " ";
+    $name = true;
   }
   
   if (mb_strlen($nom) <= 2 ){
-    $errorLength = "au moins quelques characteres speciale";
+    $errorChar = "au moins quelques characteres speciale";
+    $name = false;
   }else{
-    $errorLength = " ";
+    $errorChar = " ";
+    $name = true;
   }
   
   
@@ -44,9 +48,9 @@ if(count($_POST) > 0){
   
   date_default_timezone_set("America/Toronto");
   
-  echo $annee = substr($naissance,0,4)." ";
-  echo $mois = substr($naissance,5,2)." ";
-  echo $jour = substr($naissance,8,2)." ";
+  $annee = substr($naissance,0,4)." ";
+  $mois = substr($naissance,5,2)." ";
+  $jour = substr($naissance,8,2)." ";
   
   $annee = intval($annee);
   $mois = intval($mois);
@@ -55,72 +59,92 @@ if(count($_POST) > 0){
   
   if (checkdate($mois,$jour,$annee)){
     $erreurDateFormat = "";
+    $date = true;
   }elseif(checkdate($mois,$jour,$annee) == false){
     $erreurDateFormat = "wrong format";
+    $date = false;
   }
   
-  echo $anneePresent = date("Y")." ";  
-  echo $moisPresent = date("m")." "; 
-  echo $jourPresent = date("d");
+  $anneePresent = date("Y")." ";  
+  $moisPresent = date("m")." "; 
+  $jourPresent = date("d");
   
   
   if(substr($naissance,0,4) == 2004 && $mois == $moisPresent && $jour == $jourPresent){
     $errorNaissance = " ";
+    $date = true;
   }elseif(substr($naissance,0,4) == 2004 && $mois <= $moisPresent && $jour <= $jourPresent){
     $errorNaissance = " ";
+    $date = true;
   }elseif(substr($naissance,0,4) < 2004){
     $errorNaissance = " ";
+    $date = true;
   }elseif(substr($naissance,0,4) > 2004){
     $errorNaissance = "doit etre majeur";
+    $date = false;
   }
   
     
   //code for telephone
   if (mb_strlen($telephone) == 12){
-    $errorTelephone = " "; 
+    $errorTelephone = " ";
+    $tele = true; 
   }else{
     $errorTelephone = "mauvais format";
+    $tele = false; 
   }
   
   //check proper spacing
   if (substr($telephone,3,1) == " "){
     $errorTelephone1 = " ";
+    $tele = true; 
   }else{
     $errorTelephone1 = "mauvais format";
+    $tele = false;
   }
   //check proper "-"
   if (substr($telephone,7,1) == "-"){
     $errorTelephone2 = " ";
+    $tele = true; 
   }else{
     $errorTelephone2 = "mauvais format";
+    $tele = false;
   }
   
   // check proper number sequence
   
   if (is_numeric(substr($telephone,0,3))){
     $errorTelephone = " ";
+    $tele = true; 
   }else{
     $errorTelephone = "mauvais format";
+    $tele = false;
   }
   if (is_numeric(substr($telephone,4,3))){
     $errorTelephone = " ";
+    $tele = true; 
   }else{
     $errorTelephone = "mauvais format";
+    $tele = false;
   }
   if (is_numeric(substr($telephone,4,3))){
     $errorTelephone = " ";
+    $tele = true; 
   }else{
     $errorTelephone = "mauvais format";
+    $tele = false;
   }
   if (is_numeric(substr($telephone,8,4))){
     $errorTelephone = " ";
+    $tele = true; 
   }else{
     $errorTelephone = "mauvais format";
+    $tele = false;
   }
+
   
 
 }
-
 
 
 ?>
@@ -147,13 +171,13 @@ if(count($_POST) > 0){
     <label>Nom :</label>
     
     <input type="text" name="nom" value="">
-    <span>&nbsp;<?= $errorLength ?></span>
+    <span>&nbsp;<?= $errorChar?></span>
     
     
     <br>
     <label>Prenom :</label>
     <input type="text" name="prenom" value="">
-    <span>&nbsp;<?=  $errorChar."<br>".$errorLength ?></span>
+    <span>&nbsp;<?=  $errorChar?></span>
 
     <br>
     <label>Date de naissance :</label>
@@ -172,6 +196,3 @@ if(count($_POST) > 0){
 
 </body>
 </html>
-<?php
-//"<br>".$errorTelephone4."<br>".$errorTelephone5."<br>".$errorTelephone6
-?>
