@@ -18,6 +18,7 @@ $erreurDateFormat = "";
 
 
 
+
 ?>
 
 <?php
@@ -25,6 +26,8 @@ $erreurDateFormat = "";
 //code for nom and prenom is correct
 
 if(count($_POST) > 0){
+
+  $teleExit = false;
 
   if(strlen($nom) == mb_strlen($nom)){
     $errorChar = "au moins quelques characteres speciale";
@@ -59,10 +62,10 @@ if(count($_POST) > 0){
   
   if (checkdate($mois,$jour,$annee)){
     $erreurDateFormat = "";
-    $date = true;
+    $date = false;
   }elseif(checkdate($mois,$jour,$annee) == false){
     $erreurDateFormat = "wrong format";
-    $date = false;
+    $date = true;
   }
   
   $anneePresent = date("Y")." ";  
@@ -72,80 +75,81 @@ if(count($_POST) > 0){
   
   if(substr($naissance,0,4) == 2004 && $mois == $moisPresent && $jour == $jourPresent){
     $errorNaissance = " ";
-    $date = true;
+    $date = false;
   }elseif(substr($naissance,0,4) == 2004 && $mois <= $moisPresent && $jour <= $jourPresent){
     $errorNaissance = " ";
-    $date = true;
+    $date = false;
   }elseif(substr($naissance,0,4) < 2004){
     $errorNaissance = " ";
-    $date = true;
+    $date = false;
   }elseif(substr($naissance,0,4) > 2004){
     $errorNaissance = "doit etre majeur";
-    $date = false;
+    $date = true;
   }
   
     
   //code for telephone
   if (mb_strlen($telephone) == 12){
     $errorTelephone = " ";
-    $tele = true; 
   }else{
     $errorTelephone = "mauvais format";
-    $tele = false; 
   }
   
   //check proper spacing
   if (substr($telephone,3,1) == " "){
     $errorTelephone1 = " ";
-    $tele = true; 
   }else{
     $errorTelephone1 = "mauvais format";
-    $tele = false;
+    $teleExit == false;
   }
   //check proper "-"
   if (substr($telephone,7,1) == "-"){
     $errorTelephone2 = " ";
-    $tele = true; 
   }else{
     $errorTelephone2 = "mauvais format";
-    $tele = false;
+    $teleExit = false;
   }
   
   // check proper number sequence
   
   if (is_numeric(substr($telephone,0,3))){
     $errorTelephone = " ";
-    $tele = true; 
+    $teleExit = true;
+
   }else{
     $errorTelephone = "mauvais format";
-    $tele = false;
+    $teleExit = false;
   }
   if (is_numeric(substr($telephone,4,3))){
     $errorTelephone = " ";
-    $tele = true; 
+    $teleExit = true;
+
   }else{
     $errorTelephone = "mauvais format";
-    $tele = false;
+    $teleExit = false;
+
   }
   if (is_numeric(substr($telephone,4,3))){
     $errorTelephone = " ";
-    $tele = true; 
+    $teleExit = true;
+
   }else{
     $errorTelephone = "mauvais format";
-    $tele = false;
+    $teleExit = false;
+
   }
   if (is_numeric(substr($telephone,8,4))){
     $errorTelephone = " ";
-    $tele = true; 
+    $teleExit = true;
   }else{
     $errorTelephone = "mauvais format";
-    $tele = false;
+    $teleExit = false;
+  } 
+  if($teleExit === true){
+    exit("new user has been added");
+
   }
-
-  
-
 }
-
 
 ?>
 
