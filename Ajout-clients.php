@@ -12,9 +12,14 @@ $messageAjout = "Ajout effectué dans la base de données";
 $errorChar = "";
 $erreurDateFormat = "";
 $errorLength = "";
-$errorNaissance = "";
-$errorTelephone = ""; //format incorrecte. Doit etre 123 123-1234
+$messageNaissance = "";
 $erreurDateFormat = "";
+$messageTelephone = "";
+$errorNaissance = 0;
+$errorTelephone = 0;
+$errorNom = 0;
+$errorPrenom = 0;
+
 
 
 
@@ -23,28 +28,49 @@ $erreurDateFormat = "";
 
 <?php
 
-//code for nom and prenom is correct
+
 
 if(count($_POST) > 0){
 
-  $teleExit = false;
+  
+//code for nom and prenom is correct
 
-  if(strlen($nom) == mb_strlen($nom)){
-    $errorChar = "au moins quelques characteres speciale";
-    $name = false;
-  }else {
-    $errorChar = " ";
-    $name = true;
+
+
+
+for ($i = 0; $i < strlen($nom); $i++){
+  $c = $nom[$i];
+  if($c >= "A" && $c <= "Z" || $c >= "a" &&  $c <= "z" ){
+      echo "YOU HAVE AN UPPERCASES and possibly a lowercase";
+      $errorNom = 0;
   }
-  
-  if (mb_strlen($nom) <= 2 ){
-    $errorChar = "au moins quelques characteres speciale";
-    $name = false;
+
+}
+
+
+  if(mb_strlen($nom) <= 2){
+    echo "you need more characters";
+    $errorNom = 1;
   }else{
-    $errorChar = " ";
-    $name = true;
+    echo "woohoo your name is long duude";
+    $errorNom = 0;
   }
   
+  $accents="çéâêîôûàèìòùëï";
+  if(strpbrk($nom,$accents)){  
+      echo "you have fancy accents";
+      $errorNom = 0;
+  }
+
+
+  for ($i = 0; $i < strlen($nom); $i++){
+    $c = $nom[$i];
+    if($c >= "0" && $c <= "9"){
+        echo "YOU HAVE AN UPPERCASES and possibly a lowercase";
+        $errorNom = 1;
+    }
+  
+  }
   
   
   $naissance = str_replace("-", " ", $naissance);
@@ -57,98 +83,128 @@ if(count($_POST) > 0){
   
   $annee = intval($annee);
   $mois = intval($mois);
-  $jour = intval($mois);
+  $jour = intval($jour);
   
   
   if (checkdate($mois,$jour,$annee)){
-    $erreurDateFormat = "";
-    $date = false;
+    echo "correct format for date";
+
   }elseif(checkdate($mois,$jour,$annee) == false){
-    $erreurDateFormat = "wrong format";
-    $date = true;
+    $erreurDateFormat = 1;
   }
   
-  $anneePresent = date("Y")." ";  
-  $moisPresent = date("m")." "; 
+  $anneePresent = date("Y");  
+  $moisPresent = date("n"); 
   $jourPresent = date("d");
   
   
-  if(substr($naissance,0,4) == 2004 && $mois == $moisPresent && $jour == $jourPresent){
-    $errorNaissance = " ";
-    $date = false;
+  if($annee == 2004 && $mois == $moisPresent && $jour == $jourPresent){
+    echo "birthday is today!!!"."<br>";
+
+
   }elseif(substr($naissance,0,4) == 2004 && $mois <= $moisPresent && $jour <= $jourPresent){
-    $errorNaissance = " ";
-    $date = false;
+
+    echo "you are barely old today"."<br>";
+
+
   }elseif(substr($naissance,0,4) < 2004){
-    $errorNaissance = " ";
-    $date = false;
+
+    echo "you are old"."<br>";
+
+
   }elseif(substr($naissance,0,4) > 2004){
-    $errorNaissance = "doit etre majeur";
-    $date = true;
+    $errorNaissance = 1;
+    echo "you are not old enough"."<br>";
+    $messageNaissance = "doit etre majeur";
+
   }
   
-    
+
+  
+
+
   //code for telephone
-  if (mb_strlen($telephone) == 12){
-    $errorTelephone = " ";
+
+
+  if(strlen($telephone) == 12){
+    echo "correct number of strings"."<br>";
+    $messageTelephone = " ";
   }else{
-    $errorTelephone = "mauvais format";
+    $errorTelephone = 1;
+    $messageTelephone = "mauvais format";
+
   }
+  
   
   //check proper spacing
   if (substr($telephone,3,1) == " "){
-    $errorTelephone1 = " ";
+    echo "space correct"."<br>";
+    $messageTelephone = " ";
+
+    
   }else{
-    $errorTelephone1 = "mauvais format";
-    $teleExit == false;
+    $errorTelephone = 1;
+    echo "space not in the right place";
+    $messageTelephone = "mauvais format";
+
   }
+
+
   //check proper "-"
   if (substr($telephone,7,1) == "-"){
-    $errorTelephone2 = " ";
+    $messageTelephone = " ";
+    
   }else{
-    $errorTelephone2 = "mauvais format";
-    $teleExit = false;
+    $errorTelephone = 1;
+    echo "dash not in the right place"."<br>";
+    $messageTelephone = "mauvais format";
+
+
   }
   
   // check proper number sequence
   
   if (is_numeric(substr($telephone,0,3))){
-    $errorTelephone = " ";
-    $teleExit = true;
-
+    $messageTelephone = " ";
   }else{
-    $errorTelephone = "mauvais format";
-    $teleExit = false;
+    $errorTelephone = 1;
+    echo "not numeric"."<br>";
+    $messageTelephone = "mauvais format";
+
   }
+
   if (is_numeric(substr($telephone,4,3))){
-    $errorTelephone = " ";
-    $teleExit = true;
+    $messageTelephone = " ";
 
   }else{
-    $errorTelephone = "mauvais format";
-    $teleExit = false;
+    $errorTelephone = 1;
+    echo "not numeric"."<br>";
+    $messageTelephone = "mauvais format";
 
   }
-  if (is_numeric(substr($telephone,4,3))){
-    $errorTelephone = " ";
-    $teleExit = true;
 
-  }else{
-    $errorTelephone = "mauvais format";
-    $teleExit = false;
 
-  }
   if (is_numeric(substr($telephone,8,4))){
-    $errorTelephone = " ";
-    $teleExit = true;
+    $messageTelephone = " ";
+
+
   }else{
-    $errorTelephone = "mauvais format";
-    $teleExit = false;
+    $errorTelephone = 1;
+    echo "not numeric"."<br>";
+    $messageTelephone = "mauvais format";
   } 
-  if($teleExit === true){
-    exit("new user has been added");
+
+  if ($errorTelephone == 1 && $errorNaissance == 1){
+    $messageTelephone = "mauvais format";
+    $messageNaissance = "doit etre majeur";
 
   }
+
+  if($errorTelephone == 0 && $errorNaissance == 0 && $errorNom == 0 ){
+    exit("GABI YOU ARE INCREDIBLE");
+  }
+
+
 }
 
 ?>
@@ -175,7 +231,7 @@ if(count($_POST) > 0){
     <label>Nom :</label>
     
     <input type="text" name="nom" value="">
-    <span>&nbsp;<?= $errorChar?></span>
+    <span>&nbsp;<?= $errorNom?></span>
     
     
     <br>
@@ -186,12 +242,12 @@ if(count($_POST) > 0){
     <br>
     <label>Date de naissance :</label>
     <input type="text" name="naissance" value="" placeholder="aaaa-mm-jj">
-    <span>&nbsp;<?= $errorNaissance."<br>".$erreurDateFormat;?></span>
+    <span>&nbsp;<?= $messageNaissance?></span>
 
     <br>
     <label>Téléphone :</label>
-    <input type="tel" name="telephone" value="" placeholder="123 -1234">
-    <span>&nbsp;<?= $errorTelephone?></span>
+    <input type="tel" name="telephone" value="" placeholder=<?= $telephone?>>
+    <span>&nbsp;<?=$messageTelephone?></span>
 
     <br>
     <input type="submit" value="Valider"> 
