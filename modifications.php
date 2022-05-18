@@ -1,18 +1,53 @@
 <?php
-$clients = [
-  ["id" => 1, "nom" => "Aubin",  "prenom" => "Alain",  "dateNaissance" => "1981-01-01", "tel" => "514 111-1234"],
-  ["id" => 2, "nom" => "Brel",   "prenom" => "Bruno",  "dateNaissance" => "1982-02-02", "tel" => "514 222-1234"],
-  ["id" => 3, "nom" => "Chabot", "prenom" => "Clara",  "dateNaissance" => "1983-03-03", "tel" => "514 333-1234"],
-  ["id" => 4, "nom" => "Dubois", "prenom" => "Didier", "dateNaissance" => "1984-04-04", "tel" => "514 444-1234"],
-  ["id" => 5, "nom" => "Escot",  "prenom" => "Ernest", "dateNaissance" => "1985-05-05", "tel" => "514 555-1234"],
-  ["id" => 6, "nom" => "Fortin", "prenom" => "France", "dateNaissance" => "1986-06-06", "tel" => "514 666-1234"],
-  ["id" => 7, "nom" => "Gravel", "prenom" => "Gérard", "dateNaissance" => "1987-07-07", "tel" => "514 777-1234"],
-  ["id" => 8, "nom" => "Hébert", "prenom" => "Hugo",   "dateNaissance" => "1988-08-08", "tel" => "514 888-1234"],
-  ["id" => 9, "nom" => "Imbert", "prenom" => "Iris",   "dateNaissance" => "1989-09-09", "tel" => "514 999-1234"]
-];
-
-
-echo "<pre>".print_r($_GET, true). "</pre>";
-echo "<pre>".print_r($_SERVER, true). "</pre>";
+require "clients.php";
 
 ?>
+
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajout d'un client</title>
+  <style>
+    body                                         { width: 80%; margin: 50px auto; }
+    input, select, textarea                      { display: block; width: 200px; margin: 10px; }
+    input[type="radio"], input[type="checkbox"]  { display: inline-block; width: 20px; }
+    label, input, select, textarea               { line-height: 24px; }
+    span { color:red; text-align: left; display: block;}
+  </style>
+</head>
+<body>
+  
+  <h2>Modifications</h2>
+
+  <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post"  >
+    
+    <br>
+    <label>Nom :</label>
+    
+    <input type="text" name="nom" value="">
+    <span>&nbsp;<?= $errorNom.$messageNom.$errorNom2?></span>
+    
+    
+    <br>
+    <label>Prenom :</label>
+    <input type="text" name="prenom" value="">
+    <span>&nbsp;<?= $errorPrenom.$errorPrenom2?></span>
+
+    <br>
+    <label>Date de naissance :</label>
+    <input type="text" name="naissance" value="" placeholder="aaaa-mm-jj">
+    <span>&nbsp;<?= $messageNaissance.$errorNaissance.$checkdate?></span>
+
+    <br>
+    <label>Téléphone :</label>
+    <input type="tel" name="telephone" value="" placeholder=<?= $telephone?>>
+    <span>&nbsp;<?=$messageTelephone.$errorTelephone?></span>
+
+    <br>
+    <input type="submit" value="Valider"> 
+
+  </form>
+
+</body>
+</html>

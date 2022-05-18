@@ -126,8 +126,6 @@ for ($i = 0; $i < strlen($nom); $i++){
   $mois = intval($mois);
   $jour = intval($jour);
   
-  echo $jour;
-  echo $mois;
   
   if (checkdate($mois,$jour,$annee)){
 
@@ -236,7 +234,9 @@ for ($i = 0; $i < strlen($nom); $i++){
 
   }
 
-  if($errorTelephone == 0 && $errorNaissance == 0  && $errorNom == 0 && $errorNom2 == 0 && $errorPrenom == 0 && $checkdate == 0){
+  if($errorTelephone == 0 && $errorNaissance == 0  && $errorNom == 0 && $errorNom2 == 0 && $errorPrenom == 0 && $checkdate == 0){?>
+    <h1>woooo</h1>
+    <?php
     exit("GABI YOU ARE INCREDIBLE");
   }
 
@@ -256,6 +256,13 @@ for ($i = 0; $i < strlen($nom); $i++){
     input[type="radio"], input[type="checkbox"]  { display: inline-block; width: 20px; }
     label, input, select, textarea               { line-height: 24px; }
     span { color:red; text-align: left; display: block;}
+    h1{
+      text-align: center;
+      background-color: pink;
+      color: white;
+      text-transform: uppercase;
+
+    }
   </style>
 </head>
 <body>
