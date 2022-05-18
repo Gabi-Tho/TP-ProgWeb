@@ -241,4 +241,18 @@ for ($i = 0; $i < strlen($nom); $i++){
 
 }
 
+
+
+
+
+
+
+
+
+$userInputs=["id" => 1, "nom" => "Aubin",  "prenom" => "Alain",  "dateNaissance" => "1981-01-01", "tel" => "514 111-1234"];
+
+in_array($userInputs,$clients);
+
+//in array returns a boolean make boolean the factor for the exit function
+
 ?>
