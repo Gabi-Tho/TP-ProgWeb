@@ -8,8 +8,6 @@ $nom     = $_POST["nom"] ?? "";
 $prenom     = $_POST["prenom"] ?? "";
 $naissance     = $_POST["naissance"] ?? "";
 $telephone     = $_POST["telephone"] ?? "";
-$messageAjout = "Ajout effectué dans la base de données";
-$errorChar = "";
 $erreurDateFormat = "";
 $errorLength = "";
 $messageNaissance = "";
@@ -23,6 +21,7 @@ $messageNom = " ";
 $errorNom2 = 0;
 $errorPrenom2 = 0;
 $checkdate = 0;
+$messageDate = "";
 
 
 
@@ -115,6 +114,12 @@ for ($i = 0; $i < strlen($nom); $i++){
   
   
   $naissance = str_replace("-", " ", $naissance);
+
+  if(strlen($naissance) == 10){
+
+  }else{
+    $errorNom = 1;
+  }
   
   date_default_timezone_set("America/Toronto");
   
@@ -127,11 +132,11 @@ for ($i = 0; $i < strlen($nom); $i++){
   $jour = intval($jour);
   
   
-  if (checkdate($mois,$jour,$annee)){
+  if (checkdate($mois,$jour,$annee) == true){
 
   }elseif(checkdate($mois,$jour,$annee) == false){
     $checkdate = 1;
-    echo "date is false";
+    $messageDate = "mauvais format";
   }
   
   $anneePresent = date("Y");  
@@ -235,9 +240,9 @@ for ($i = 0; $i < strlen($nom); $i++){
   }
 
   if($errorTelephone == 0 && $errorNaissance == 0  && $errorNom == 0 && $errorNom2 == 0 && $errorPrenom == 0 && $checkdate == 0){?>
-    <h1>woooo</h1>
+    <h1>Votre ajout a été affectuer</h1>
     <?php
-    exit("GABI YOU ARE INCREDIBLE");
+    exit();
   }
 
 
@@ -274,23 +279,23 @@ for ($i = 0; $i < strlen($nom); $i++){
     <label>Nom :</label>
     
     <input type="text" name="nom" value="">
-    <span>&nbsp;<?= $errorNom.$messageNom.$errorNom2?></span>
+    <span>&nbsp;<?= $messageNom?></span>
     
     
     <br>
     <label>Prenom :</label>
     <input type="text" name="prenom" value="">
-    <span>&nbsp;<?= $errorPrenom.$errorPrenom2?></span>
+    <span>&nbsp;<?= $messageNom?></span>
 
     <br>
     <label>Date de naissance :</label>
     <input type="text" name="naissance" value="" placeholder="aaaa-mm-jj">
-    <span>&nbsp;<?= $messageNaissance.$errorNaissance.$checkdate?></span>
+    <span>&nbsp;<?= $messageNaissance."<br>".$messageDate?></span>
 
     <br>
     <label>Téléphone :</label>
     <input type="tel" name="telephone" value="" placeholder=<?= $telephone?>>
-    <span>&nbsp;<?=$messageTelephone.$errorTelephone?></span>
+    <span>&nbsp;<?=$messageTelephone?></span>
 
     <br>
     <input type="submit" value="Valider"> 
