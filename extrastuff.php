@@ -18,7 +18,6 @@ $messageNom = " ";
 $errorNom2 = 0;
 $errorPrenom2 = 0;
 $checkdate = 0;
-$messageDate = "";
 
 ?>
 
@@ -111,6 +110,7 @@ for ($i = 0; $i < strlen($nom); $i++){
   if(strlen($naissance) == 10){
 
   }else{
+    echo "birthinput is too long";
     $errorNom = 1;
   }
   
@@ -125,11 +125,11 @@ for ($i = 0; $i < strlen($nom); $i++){
   $jour = intval($jour);
   
   
-  if (checkdate($mois,$jour,$annee) == true){
+  if (checkdate($mois,$jour,$annee)){
 
   }elseif(checkdate($mois,$jour,$annee) == false){
     $checkdate = 1;
-    $messageDate = "mauvais format";
+    echo "date is false";
   }
   
   $anneePresent = date("Y");  
@@ -233,61 +233,12 @@ for ($i = 0; $i < strlen($nom); $i++){
   }
 
   if($errorTelephone == 0 && $errorNaissance == 0  && $errorNom == 0 && $errorNom2 == 0 && $errorPrenom == 0 && $checkdate == 0){?>
-    <h1>Votre ajout a été affectuer</h1>
+    <h1>woooo</h1>
     <?php
-    exit();
+    exit("GABI YOU ARE INCREDIBLE");
   }
 
 
 }
 
 ?>
-
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>modifications</title>
-  <style>
-    body                                         { width: 80%; margin: 50px auto; }
-    input, select, textarea                      { display: block; width: 200px; margin: 10px; }
-    input[type="radio"], input[type="checkbox"]  { display: inline-block; width: 20px; }
-    label, input, select, textarea               { line-height: 24px; }
-    span { color:red; text-align: left; display: block;}
-  </style>
-</head>
-<body>
-  
-  <h2>Modifications</h2>
-
-  <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post"  >
-    
-    <br>
-    <label>Nom :</label>
-    
-    <input type="text" name="nom" value="<?=$clients[0]["nom"]?>">
-    <span>&nbsp;<?= $messageNom?></span>
-    
-    
-    <br>
-    <label>Prenom :</label>
-    <input type="text" name="prenom" value="<?=$clients[0]["prenom"]?>">
-    <span>&nbsp;<?= $messageNom?></span>
-
-    <br>
-    <label>Date de naissance :</label>
-    <input type="text" name="naissance" value="<?=$clients[0]["dateNaissance"]?>" placeholder="aaaa-mm-jj">
-    <span>&nbsp;<?= $messageNaissance."<br>".$messageDate?></span>
-
-    <br>
-    <label>Téléphone :</label>
-    <input type="tel" name="telephone" value="<?=$clients[0]["tel"]?>" placeholder=<?= $telephone?>>
-    <span>&nbsp;<?=$messageTelephone?></span>
-
-    <br>
-    <input type="submit" value="Valider"> 
-
-  </form>
-
-</body>
-</html>
