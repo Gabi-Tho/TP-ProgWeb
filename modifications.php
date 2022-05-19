@@ -9,25 +9,7 @@ $telephone     = $_POST["telephone"] ?? "";
 $id = $_GET['id'] ?? "";
 
 
-
-
-$erreurDateFormat = "";
-$errorLength = "";
-$messageNaissance = "";
-$erreurDateFormat = "";
-$msgTelephone = "";
-$messageTelephone = " ";
-$messageTelephone2 = "";
-$errorNaissance = 0;
-$errorTelephone = 0;
-$errorNom = 0;
-$errorPrenom = 0;
-$messagePrenom = " ";
-$errorNom2 = 0;
-$errorPrenom2 = 0;
-$checkdate = 0;
-$messageDate = "";
-$messageNom = " ";
+require "variables.php";
 
 
 ?>
@@ -44,6 +26,8 @@ foreach ($clients as $client)  {
 }
 
 if(count($_POST) > 0){
+
+  //code for name
 
   for($i = 0; $i < strlen($nom); $i++){
     $c = $nom[$i];
@@ -125,7 +109,7 @@ for ($i = 0; $i < strlen($nom); $i++){
     
     }
     
-  
+  //code for birthday
   
   $naissance = str_replace("-", " ", $naissance);
 
@@ -177,52 +161,51 @@ for ($i = 0; $i < strlen($nom); $i++){
     $messageNaissance = "plus que 100 ans";
     $errorNaissance = 1;
   }elseif($annee < 1922){
-    $messageNaissance = "plus que 100 ans";
+    $messageNaissance = "l'age n'est pas valide";
     $errorNaissance = 1;
   }
 
 
 
 
-  //code for telephone
 
 
   if(strlen($telephone) == 12){
-    $messageTelephone = " ";
+    $messageTelephone3 = " ";
   }else{
     $errorTelephone = 1;
-    $msgTelephone = "mauvais format";
+    $messageTelephone3 = "utlise un numero avec 10 chiffres";
 
   }
   
   
   //check proper spacing
   if (substr($telephone,3,1) == " "){
-    $messageTelephone = " ";
+    $messageTelephone2 = " ";
 
     
   }else{
     $errorTelephone = 1;
-    $messageTelephone2 = "mauvais format";
+    $messageTelephone2 = "utiliser un espace et un tiret (ex. 123 123-1234)";
 
   }
 
 
   //check proper "-"
   if (substr($telephone,7,1) == "-"){
-    $messageTelephone = " ";
+    $msgTelephone = " ";
     
   }else{
     $errorTelephone = 1;
-    $msgTelephone = "mauvais format";
+    $msgTelephone = "utlise un tiret";
 
 
   }
   
-  // check proper number sequence
+  // code to check proper number sequence
   
   if (is_numeric(substr($telephone,0,3))){
-    $messageTelephone = " ";
+    $msgTelephone = " ";
   }else{
     $errorTelephone = 1;
     $msgTelephone = "mauvais format";
@@ -230,7 +213,7 @@ for ($i = 0; $i < strlen($nom); $i++){
   }
 
   if (is_numeric(substr($telephone,4,3))){
-    $messageTelephone = " ";
+    $msgTelephone = " ";
 
   }else{
     $errorTelephone = 1;
@@ -240,7 +223,7 @@ for ($i = 0; $i < strlen($nom); $i++){
 
 
   if (is_numeric(substr($telephone,8,4))){
-    $messageTelephone = " ";
+    $msgTelephone = " ";
 
 
   }else{
@@ -275,7 +258,8 @@ for ($i = 0; $i < strlen($nom); $i++){
   </style>
 </head>
 <body>
-  
+
+  <div><a href=tableau-clients.php>Retourner</a></div>
   <h2>Modifications</h2>
 
   <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post"  >
@@ -299,8 +283,8 @@ for ($i = 0; $i < strlen($nom); $i++){
 
     <br>
     <label>Téléphone :</label>
-    <input type="tel" name="telephone" value="<?=$telephone?>" placeholder=<?= $telephone?>>
-    <span>&nbsp;<?=$msgTelephone.$messageTelephone.$messageTelephone2?></span>
+    <input type="tel" name="telephone" value="<?=$telephone?>" placeholder="123 123-1234">
+    <span>&nbsp;<?=$msgTelephone."<br>".$messageTelephone3."<br>".$messageTelephone."<br>".$messageTelephone2?></span>
 
     <br>
     <input type="submit" value="Valider"> 

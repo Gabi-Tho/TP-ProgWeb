@@ -2,28 +2,12 @@
 
  
 
-// ajouter le code de gestion de ce formulaire
-
 $nom     = $_POST["nom"] ?? "";
 $prenom     = $_POST["prenom"] ?? "";
 $naissance     = $_POST["naissance"] ?? "";
 $telephone     = $_POST["telephone"] ?? "";
-$erreurDateFormat = "";
-$errorLength = "";
-$messageNaissance = "";
-$erreurDateFormat = "";
-$messageTelephone = "";
-$errorNaissance = 0;
-$errorTelephone = 0;
-$errorNom = 0;
-$errorPrenom = 0;
-$messageNom = " ";
-$errorNom2 = 0;
-$errorPrenom2 = 0;
-$checkdate = 0;
-$messageDate = "";
 
-
+require "variables.php";
 
 
 
@@ -34,6 +18,8 @@ $messageDate = "";
 
 
 if(count($_POST) > 0){
+
+//code for name
 
   for($i = 0; $i < strlen($nom); $i++){
     $c = $nom[$i];
@@ -55,6 +41,7 @@ for ($i = 0; $i < strlen($nom); $i++){
 
   if(mb_strlen($nom) <= 2){
     $errorNom = 1;
+    $messageNom = "plus que deux characteres";
   }else{
     $errorNom = 0;
   }
@@ -69,6 +56,7 @@ for ($i = 0; $i < strlen($nom); $i++){
     $c = $nom[$i];
     if($c >= "0" && $c <= "9"){
         $errorNom = 1;
+        $messageNom = "pas de characteres speciaux";
     }
   
   }
@@ -78,7 +66,7 @@ for ($i = 0; $i < strlen($nom); $i++){
   for($i = 0; $i < strlen($prenom); $i++){
     $c = $prenom[$i];
     if($c == "!" || $c == "#" || $c == "$" || $c == "%" || $c == "&" || $c == "*" || $c ==  "+" || $c == "-" || $c == ":" || $c == ";" || $c == "=" || $c == " " ){
-      $messageNom = "pas de characteres speciaux";
+      $messagePrenom = "pas de characteres speciaux";
       $errorPrenom2 = 1;
     }
   }
@@ -94,6 +82,7 @@ for ($i = 0; $i < strlen($nom); $i++){
   
     if(mb_strlen($prenom) <= 2){
       $errorPrenom = 1;
+      $messagePrenom = "plus que 2 characteres";
     }else{
       $errorPrenom = 0;
     }
@@ -107,11 +96,12 @@ for ($i = 0; $i < strlen($nom); $i++){
       $c = $prenom[$i];
       if($c >= "0" && $c <= "9"){
           $errorPrenom = 1;
+          $messagePrenom = "pas de characteres speciaux";
       }
     
     }
     
-  
+  //code to check naissance input
   
   $naissance = str_replace("-", " ", $naissance);
 
@@ -119,6 +109,7 @@ for ($i = 0; $i < strlen($nom); $i++){
 
   }else{
     $errorNom = 1;
+    $messageDate = "mauvais format";
   }
   
   date_default_timezone_set("America/Toronto");
@@ -155,14 +146,14 @@ for ($i = 0; $i < strlen($nom); $i++){
     $errorNaissance = 1;
   }
 
-  if($annee == 1922 && $mois == $moisPresent && $jour > $jourPresent){
+  if($annee === 1922 && $mois == $moisPresent && $jour > $jourPresent){
     $errorNaissance = 1;
     $messageNaissance = "plus que 100 ans";
-  }elseif($annee == 1922 && $mois > $moisPresent){
+  }elseif($annee === 1922 && $mois > $moisPresent){
     $messageNaissance = "plus que 100 ans";
     $errorNaissance = 1;
   }elseif($annee < 1922){
-    $messageNaissance = "plus que 100 ans";
+    $messageNaissance = "l'age n'est pas valide";
     $errorNaissance = 1;
   }
 
@@ -173,33 +164,33 @@ for ($i = 0; $i < strlen($nom); $i++){
 
 
   if(strlen($telephone) == 12){
-    $messageTelephone = " ";
+    $messageTelephone3 = " ";
   }else{
     $errorTelephone = 1;
-    $messageTelephone = "mauvais format";
+    $messageTelephone3 = "utlise un numero avec 10 chiffres";
 
   }
   
   
   //check proper spacing
   if (substr($telephone,3,1) == " "){
-    $messageTelephone = " ";
+    $messageTelephone2 = " ";
 
     
   }else{
     $errorTelephone = 1;
-    $messageTelephone = "mauvais format";
+    $messageTelephone2 = "utiliser un espace et un tiret (ex. 123 123-1234)";
 
   }
 
 
   //check proper "-"
   if (substr($telephone,7,1) == "-"){
-    $messageTelephone = " ";
+    $msgTelephone = " ";
     
   }else{
     $errorTelephone = 1;
-    $messageTelephone = "mauvais format";
+    $msgTelephone = "utlise un tiret";
 
 
   }
@@ -233,11 +224,6 @@ for ($i = 0; $i < strlen($nom); $i++){
     $messageTelephone = "mauvais format";
   } 
 
-  if ($errorTelephone == 1 && $errorNaissance == 1){
-    $messageTelephone = "mauvais format";
-    $messageNaissance = "doit etre majeur";
-
-  }
 
   if($errorTelephone == 0 && $errorNaissance == 0  && $errorNom == 0 && $errorNom2 == 0 && $errorPrenom == 0 && $checkdate == 0){?>
     <h1>Votre ajout a été affectuer</h1>
@@ -285,7 +271,7 @@ for ($i = 0; $i < strlen($nom); $i++){
     <br>
     <label>Prenom :</label>
     <input type="text" name="prenom" value="">
-    <span>&nbsp;<?= $messageNom?></span>
+    <span>&nbsp;<?= $messagePrenom?></span>
 
     <br>
     <label>Date de naissance :</label>
@@ -295,7 +281,7 @@ for ($i = 0; $i < strlen($nom); $i++){
     <br>
     <label>Téléphone :</label>
     <input type="tel" name="telephone" value="" placeholder=<?= $telephone?>>
-    <span>&nbsp;<?=$messageTelephone?></span>
+    <span>&nbsp;<?=$messageTelephone."<br>".$messageTelephone3."<br>".$msgTelephone."<br>".$messageTelephone2?></span>
 
     <br>
     <input type="submit" value="Valider"> 

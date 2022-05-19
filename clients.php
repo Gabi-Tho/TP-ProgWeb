@@ -11,3 +11,4 @@ $clients = [
   ["id" => 9, "nom" => "Imbert", "prenom" => "Iris",   "dateNaissance" => "1989-09-09", "tel" => "514 999-1234"]
 ];
 ?>
+
