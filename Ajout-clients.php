@@ -257,6 +257,8 @@ for ($i = 0; $i < strlen($nom); $i++){
   </style>
 </head>
 <body>
+  
+  <div><a href=tableau-clients.php>Retourner</a></div>
   <h2>Ajout d'une client</h2>
 
   <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post"  >
